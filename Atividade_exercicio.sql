@@ -109,7 +109,7 @@ values
     turno varchar (20) not null,
     tipo_aluno varchar(25) not null,
     email_aluno varchar(60) unique,
-    sexo VARCHAR(14) NOT NULL
+    sexo Varchar (14) NOT NULL
 );
  insert into  ALUNO (matricula_aluno, nome_aluno, turma, turno, tipo_aluno, email_aluno, sexo)
 Values 
@@ -175,12 +175,12 @@ values
 (8000, 9905, 'Maria', 'Operador de Computador'),
 (8000, 9906, 'Madalena', 'Operador de Computador'),
  (8003, 9907, 'Andre', 'Enfermagem'),
-    (8003, 9908, 'Paula', 'Enfermagem'),
-    (8003, 9909, 'Flavia', 'Enfermagem');
+ (8003, 9908, 'Paula', 'Enfermagem'),
+ (8003, 9909, 'Flavia', 'Enfermagem');
 
 create table  ATENDIMENTO (
-id_recepcao int ,
- id_funcionario int ,
+id_recepcao int primary key,
+ id_funcionario int  ,
  nome_funcionario VARCHAR(50),
  foreign key (id_recepcao) references  RECEPCAO(id_recepcao),
 foreign key (id_funcionario) references  FUNCIONARIO(id_funcionario)
@@ -204,7 +204,7 @@ values
 (8703, 4346, 'Daniele'),
 (8704, 4348, 'Emanuel');
 
-create table ORGANIZACAO (
+create table GESTAO(
  id_senac int,
  id_curso int , 
  nome_curso varchar (50) not null,
@@ -214,14 +214,14 @@ create table ORGANIZACAO (
  foreign key (id_curso) references CURSO (id_curso)
 );
 
-insert into  ORGANIZACAO (id_senac, id_curso, nome_curso, tipo_curso, unidade_senac)
+insert into  GESTAO (id_senac, id_curso, nome_curso, tipo_curso, unidade_senac)
 values 
  (1234, 4545, 'Operador de Computador', 'Técnico', 'SENAC ZN'),
  (1235, 4546, 'Desenvolvedor de Sistema', 'Técnico', 'SENAC Alecrim'),
  (1234, 4547, 'Enfermagem', 'Técnico', 'SENAC ZN'),
  (1234, 4548, 'Enfermagem', 'Técnico', 'SENAC Alecrim');
 
-create table  SALA (
+create table  LABORATORIO (
  id_turma int ,
  id_curso int ,
  nome_turma varchar (50) not null,
@@ -231,7 +231,7 @@ create table  SALA (
  foreign key  (id_curso) references  CURSO(id_curso)
 );
 
-insert into  SALA (id_curso, id_turma, nome_turma, tipo_curso, turno_curso)
+insert into  LABORATORIO (id_curso, id_turma, nome_turma, tipo_curso, turno_curso)
 values
 (4545, 8000, 'Operador de Computador', 'Técnico', 'Matutino'),
 (4546, 8001, 'Desenvolvedor de Sistema', 'Técnico', 'Vespertino'),
@@ -268,13 +268,13 @@ foreign key (id_funcionario) references  FUNCIONARIO(id_funcionario)
 
  insert into ATENDIMENTO (id_recepcao, id_funcionario, nome_funcionario)
 values 
-(4901, 4344, 'Pedro'),
+(4909, 4344, 'Pedro'),
 (4902, 4347, 'Joana');
 
 create table  COORDENACAO (
  id_departamento int ,
  id_funcionario int ,
-  nome_funcionario varcha(50),
+  nome_funcionario varchar (50),
   foreign key  (id_funcionario) references FUNCIONARIO(id_funcionario),
   foreign key  (id_departamento) references DEPARTAMENTO(id_departamento)
 );
@@ -289,7 +289,7 @@ id_departamento int ,
 id_turma int ,
 nome_funcionario varchar (50) not null,
 foreign key  (id_departamento) references DEPARTAMENTO(id_departamento),
-foreign key (id_turma) references  TURMA(id_turma)
+foreign key (id_turma) references TURMA (id_turma)
 );
 
 insert into  SETOR_PEDAGOGICO (id_departamento, id_turma, nome_funcionario)    
@@ -304,7 +304,7 @@ values
 create table INSTRUTOR (
 id_funcionario int primary key ,
 nome_funcionario varchar (50),
-foreign (id_funcionario) References FUNCIONARIO(id_funcionario)
+
 );
 
 insert into  INSTRUTOR (id_funcionario, nome_funcionario)
@@ -316,10 +316,9 @@ values
 create table  RECEPCIONISTA (
 id_funcionario int primary key ,
  nome_funcionario varchar (50) not null,
- foreign key  (id_funcionario) refrences  FUNCIONARIO(id_funcionario)
 );
 
-insert key  RECEPCIONISTA (id_funcionario, nome_funcionario)
+insert into   RECEPCIONISTA (id_funcionario, nome_funcionario)
 values 
 (4344, 'Pedro'),
 (4347, 'Joana');
@@ -338,7 +337,7 @@ values
 create table  TECNICO (
 id_curso int primary key ,
 nome_curso varchar(50),
-foreign  (id_curso) references CURSO(id_curso)
+foreign key (id_curso) references CURSO (id_curso)
 );
 
 insert into  TECNICO (id_curso, nome_curso)
@@ -359,9 +358,9 @@ values
     (4549, 'LGPD');
 
 create table PSG (
-    matricula_aluno int primary key 
+    matricula_aluno int primary key ,
     nome_aluno varchar (50) not null,
-foreign key (marticula_aluno) references CURSO(matricula_aluno)
+foreign key (matricula_aluno) references  ALUNO  ( matricula_aluno)
 );
 
 insert into PSG (matricula_aluno, nome_aluno)
@@ -373,7 +372,7 @@ values
 create table COMERCIAL (
 matricula_aluno int primary key ,
 nome_aluno VARCHAR(50)not null,
-foreign key (matricula_aluno) references CURSO  (matricula_aluno)
+foreign key (matricula_aluno) references ALUNO (matricula_aluno)
 
 );
 
@@ -386,7 +385,7 @@ values
 create table BOLSISTA (
 matricula_aluno int primary key,
 nome_aluno varchar (50) not null,
-foreign key (matricula_aluno) references CURSO (matricula_aluno)
+foreign key (matricula_aluno) references ALUNO (matricula_aluno)
 );
 
 insert into BOLSISTA (matricula_aluno, nome_aluno)
@@ -400,7 +399,7 @@ values
 -- 1 questão 
 select*from FUNCIONARIO
 
-Encontre o total de alunos matriculados em cada curso
+--Encontre o total de alunos matriculados em cada curso
 --2 questão 
 Select  c.nome_curso, count (m.matricula_aluno) as total_alunos_matriculados
 from MATRICULA m
@@ -414,9 +413,9 @@ order by salario desc;
 
 -- 4 questão 
 
-SELECT count(*) total_curso
-FROM CURSO
-GROUP BY tipo_curso;
+select  count(*) 
+from CURSO
+group by nome_curso
 
 -- 5 questão 
 SELECT *from CURSO
@@ -425,8 +424,8 @@ where  carga_horaria> 2;
 -- 9 questão 
 
 SELECT nome_curso, carga_horaria, valor
-FROM CURSO;
-
+ from CURSO;
+ select * from DEPARTAMENTO
 
 -- 10 questão 
 select *
@@ -434,18 +433,25 @@ from ALUNO
 where  nome_aluno like '%a%';
 
 
-
-
-
-
-
-
-
---13 SELECT c.nome_curso, c.numero_vagas - COUNT(m.matricula_aluno) AS vagas_disponiveis
-select c.nome_curso, c.vaga_curso - count (m.matricula_aluno) as vagas_disponiveis
+--13 questão 
+select c.nome_curso, count (m.matricula_aluno)-c.vaga_curso   as vagas_disponiveis
 from  CURSO c
 join  MATRICULA m on c.id_curso =  id_curso
 group by c.id_curso, c.nome_curso, vaga_curso
 order by  vagas_disponiveis desc;
+
+
+--Encontre os funcionários que foram contratados nos últimos 12 meses
+select  *
+from  FUNCIONARIO f
+ join DEPARTAMENTO d on f. id_funcionario= id_departamento
+where contrato >= dateadd  (month, 12, getdate())
+
+
+  --Liste os funcionários que são professores e que tenham acima de 5 anos de experiência no Senac.
+ select * from  FUNCIONARIO
+ join INSTRUTOR on
+
+
 
 
