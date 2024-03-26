@@ -398,30 +398,27 @@ values
 
 -- 1 questão 
 select*from FUNCIONARIO
+-- Seleciona todos os funcionários
 
 --Encontre o total de alunos matriculados em cada curso
 --2 questão 
-Select  c.nome_curso, count (m.matricula_aluno) as total_alunos_matriculados
-from MATRICULA m
- join TURMA t on m.id_turma = t.id_turma
-Join CURSO c on id_curso= c.id_curso
-group by c.nome_curso;
+
 -- 3  questão 
 select funcionario, salario
  from DEPARTAMENTO
 order by salario desc;
-
+--seleciona o nome do funcionário e seu salário, ordenado pelo salário em ordem decrescente
 -- 4 questão 
 
 select  count(*) 
-from CURSO
-group by nome_curso
+from  CURSO
+group by tipo_curso
+--Conta o número de cursos agrupados por tipo de curso
 
--- 5 questão 
-SELECT *from CURSO
-where  carga_horaria> 2;
 
 -- 9 questão 
+--seleciona o nome do curso, carga horária e valor de todos os cursos
+
 
 SELECT nome_curso, carga_horaria, valor
  from CURSO;
@@ -431,15 +428,15 @@ SELECT nome_curso, carga_horaria, valor
 select *
 from ALUNO
 where  nome_aluno like '%a%';
-
+ --Selecionar todos os alunos cujo nome contenha a letra a
 
 --13 questão 
-select c.nome_curso, count (m.matricula_aluno)-c.vaga_curso   as vagas_disponiveis
+select c.nome_curso, count (m.matricula_aluno) -c.vaga_curso   as vagas_disponiveis
 from  CURSO c
 join  MATRICULA m on c.id_curso =  id_curso
 group by c.id_curso, c.nome_curso, vaga_curso
 order by  vagas_disponiveis desc;
-
+--seleciona o nome do curso e o número de vagas disponíveis
 
 --Encontre os funcionários que foram contratados nos últimos 12 meses
 select  *
@@ -447,10 +444,8 @@ from  FUNCIONARIO f
  join DEPARTAMENTO d on f. id_funcionario= id_departamento
 where contrato >= dateadd  (month, 12, getdate())
 
+-- seleciona todos os funcionários que foram contratados nos últimos 12 meses
 
-  --Liste os funcionários que são professores e que tenham acima de 5 anos de experiência no Senac.
- select * from  FUNCIONARIO
- join INSTRUTOR on
 
 
 
